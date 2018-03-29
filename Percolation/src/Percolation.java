@@ -2,8 +2,11 @@
  * Created by Arthur on 2018/3/28.
  */
 
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
+//import edu.princeton.cs.algs4.StdRandom;
+//import edu.princeton.cs.algs4.StdStats;
+
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -25,7 +28,7 @@ public class Percolation {
         this.open = new byte[N][N];
     }
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        In input = new In(args[0]);
 //        int N = input.readInt();
 //        Percolation percolation = new Percolation(N);
@@ -44,8 +47,7 @@ public class Percolation {
 //        } else {
 //            StdOut.println("does not percolate");
 //        }
-
-    }
+//    }
 
     public void open(int row, int col) {
         validate(row, col);
