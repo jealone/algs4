@@ -2,16 +2,15 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
-/**
- * Created by Arthur on 2018/3/29.
- */
 public class PercolationStats {
 
-    private double mean;
-    private double stddev;
-    private double cilow;
-    private double cihigh;
-    private double[] each;
+    private static final double CONFIDENCE_95 = 1.96;
+
+    private final double mean;
+    private final double stddev;
+    private final double ciLow;
+    private final double ciHigh;
+
 
 
     public PercolationStats(int n, int trials) {
@@ -19,7 +18,7 @@ public class PercolationStats {
             throw new IllegalArgumentException("invalid input");
         }
 
-        this.each = new double[trials];
+        double[] each = new double[trials];
         for (int i = 0; i < trials; i++) {
             Percolation perc = new Percolation(n);
             int count = 0;
@@ -32,13 +31,13 @@ public class PercolationStats {
                 perc.open(row, col);
                 count++;
             }
-            this.each[i] = (double) count / (n * n);
+            each[i] = (double) count / (n * n);
         }
 
-        this.mean = StdStats.mean(this.each);
-        this.stddev = StdStats.stddev(this.each);
-        this.cilow = this.mean - (1.96 * this.stddev) / Math.sqrt(trials);
-        this.cihigh = this.mean + (1.96 * this.stddev) / Math.sqrt(trials);
+        this.mean = StdStats.mean(each);
+        this.stddev = StdStats.stddev(each);
+        this.ciLow = this.mean - (CONFIDENCE_95 * this.stddev) / Math.sqrt(trials);
+        this.ciHigh = this.mean + (CONFIDENCE_95 * this.stddev) / Math.sqrt(trials);
     }
 
     public double mean() {
@@ -50,18 +49,18 @@ public class PercolationStats {
 
     }
     public double confidenceLo() {
-        return this.cilow;
+        return this.ciLow;
 
     }
     public double confidenceHi() {
-        return this.cihigh;
+        return this.ciHigh;
     }
 
     public static void main(String[] args) {
-        int N = Integer.parseInt(args[0]);
-        int T = Integer.parseInt(args[1]);
+        int size = Integer.parseInt(args[0]);
+        int trial = Integer.parseInt(args[1]);
 
-        PercolationStats stats = new PercolationStats(N, T);
+        PercolationStats stats = new PercolationStats(size, trial);
 
         StdOut.println("mean                    = " + stats.mean());
         StdOut.println("stddev                  = " + stats.stddev());
